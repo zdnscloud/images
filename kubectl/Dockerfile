@@ -1,13 +1,27 @@
+FROM golang:alpine AS build
+COPY ./sleep-forever.go /go/src
+RUN mkdir -p /go/src/github.com/c-bata \
+    && apk add make git \
+    && cd /go/src/github.com/c-bata \
+    && git clone https://github.com/c-bata/kube-prompt.git \
+    && cd kube-prompt \
+    && make build \
+    && cd /go/src \
+    && go build sleep-forever.go
+
 FROM alpine
 
+WORKDIR /home
 ENV KUBE_LATEST_VERSION="v1.13.4"
-COPY ./run-sh /bin/
+ENV PS1='zcloud-shell\$ '
+COPY --from=build /go/src/github.com/c-bata/kube-prompt/kube-prompt /usr/local/bin/
+COPY --from=build /go/src/sleep-forever /usr/local/bin/
 RUN apk add --update -t deps curl \
- && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
- && chmod +x /usr/local/bin/kubectl \
- && apk del --purge deps curl \
- && apk add bash \
- && rm /var/cache/apk/*
+    && curl -L https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl \
+    && apk del --purge deps curl \
+    && apk add bash jq \
+    && rm /var/cache/apk/*
 
-USER 1001
-ENTRYPOINT ["/bin/run-sh"]
+USER 1001:1001
+ENTRYPOINT ["/usr/local/bin/sleep-forever"]
