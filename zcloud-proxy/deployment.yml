@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: zcloud-proxy
+  namespace: zcloud
+  labels:
+    app: zcloud-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zcloud-proxy
+  template:
+    metadata:
+      labels:
+        app: zcloud-proxy
+    spec:
+      containers:
+      - name: zcloud-proxy
+        image: zdnscloud/zcloud-proxy:v1.0.0
+        imagePullPolicy: IfNotPresent
+        command: ["agent"]
+        args: ["-server", "202.173.9.61:8080", "-agentKey", "nana"]
