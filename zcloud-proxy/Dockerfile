@@ -1,4 +1,4 @@
-FROM golang:alpine AS build
+FROM golang:1.12.5-alpine3.9 AS build
 
 RUN mkdir -p /go/src/github.com/zdnscloud \
     && apk add git \
@@ -7,7 +7,7 @@ RUN mkdir -p /go/src/github.com/zdnscloud \
     && cd singlecloud \
     && CGO_ENABLED=0 GOOS=linux go build cmd/agent/agent.go
 
-FROM alpine:latest
+FROM alpine:3.9.4
 RUN apk --no-cache add ca-certificates
 COPY --from=build /go/src/github.com/zdnscloud/singlecloud/agent /usr/local/bin/
 

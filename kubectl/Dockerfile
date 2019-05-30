@@ -1,4 +1,4 @@
-FROM golang:alpine AS build
+FROM golang:1.12.5-alpine3.9 AS build
 COPY ./sleep-forever.go /go/src
 RUN mkdir -p /go/src/github.com/c-bata \
     && apk add make git \
@@ -9,7 +9,7 @@ RUN mkdir -p /go/src/github.com/c-bata \
     && cd /go/src \
     && go build sleep-forever.go
 
-FROM alpine
+FROM alpine:3.9.4
 
 WORKDIR /home
 ENV KUBE_LATEST_VERSION="v1.13.4"
