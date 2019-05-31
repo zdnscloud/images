@@ -12,7 +12,7 @@ RUN mkdir -p /go/src/github.com/c-bata \
 FROM alpine:3.9.4
 
 WORKDIR /home
-ENV KUBE_LATEST_VERSION="v1.13.4"
+ENV KUBE_LATEST_VERSION="v1.13.1"
 ENV PS1='zcloud-shell\$ '
 COPY --from=build /go/src/github.com/c-bata/kube-prompt/kube-prompt /usr/local/bin/
 COPY --from=build /go/src/sleep-forever /usr/local/bin/

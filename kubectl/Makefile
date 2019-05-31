@@ -1,7 +1,7 @@
 
 REGISTRY_NAME = zdnscloud
 IMAGE_NAME = kubectl
-VERSION = v1.13
+VERSION = v1.13.1
 
 .PHONY: all container
 
