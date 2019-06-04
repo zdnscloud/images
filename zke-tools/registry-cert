@@ -1,0 +1,6 @@
+#!/bin/bash -x
+
+DOCKER_CRTS_DIR=/etc/docker/certs.d
+DOCKER_TMP_CRTS_DIR=/docker-certs-tmp
+mkdir -p $DOCKER_CRTS_DIR
+mv $DOCKER_TMP_CRTS_DIR/* $DOCKER_CRTS_DIR/

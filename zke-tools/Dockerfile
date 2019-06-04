@@ -1,32 +1,38 @@
-FROM ubuntu:16.04
-# FROM arm=armhf/ubuntu:16.04
+FROM golang:1.12.5-alpine3.9 AS build
 
-ARG DAPPER_HOST_ARCH
-ENV HOST_ARCH=${DAPPER_HOST_ARCH} ARCH=${DAPPER_HOST_ARCH}
+RUN mkdir -p /go/src/github.com/zdnscloud/images/zke-tools
+COPY ./ /go/src/github.com/zdnscloud/images/zke-tools
+WORKDIR /go/src/github.com/zdnscloud/images/zke-tools
+RUN CGO_ENABLED=0 GOOS=linux go build main.go \
+    && mv main etcd-backup
 
-RUN apt-get update && \
-    apt-get install -y gcc ca-certificates git wget curl vim less file && \
-    rm -f /bin/sh && ln -s /bin/bash /bin/sh
 
-ENV GOLANG_ARCH_amd64=amd64 GOLANG_ARCH_arm=armv6l GOLANG_ARCH=GOLANG_ARCH_${ARCH} \
-    GOPATH=/go PATH=/go/bin:/usr/local/go/bin:${PATH} SHELL=/bin/bash
+FROM nginx:1.14.0-alpine
 
-RUN wget -O - https://dl.google.com/go/go1.9.2.linux-${!GOLANG_ARCH}.tar.gz | tar -xzf - -C /usr/local && \
-    go get golang.org/x/lint/golint && go get github.com/rancher/trash
+RUN apk -U --no-cache add bash curl wget ca-certificates tar sysstat\
+    && mkdir -p /opt/zke-tools/bin /etc/confd \
+    && curl -sLf https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 > /usr/bin/confd \
+    && chmod +x /usr/bin/confd \
+    && curl -sLf https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz | tar xvzf - -C /opt/zke-tools/bin --strip-components=1 docker/docker \
+    && chmod +x /opt/zke-tools/bin/docker \
+    && apk del curl
 
-ENV DOCKER_URL_amd64=https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 \
-    DOCKER_URL_arm=https://github.com/rancher/docker/releases/download/v1.10.3-ros1/docker-1.10.3_arm \
-    DOCKER_URL=DOCKER_URL_${ARCH}
+RUN mkdir -p /opt/cni/bin
+RUN wget -q -O - https://github.com/containernetworking/cni/releases/download/v0.4.0/cni-amd64-v0.4.0.tgz | tar xzf - -C /tmp
+RUN wget -q -O /tmp/portmap https://github.com/projectcalico/cni-plugin/releases/download/v1.9.1/portmap
 
-RUN wget -O - ${!DOCKER_URL} > /usr/bin/docker && chmod +x /usr/bin/docker
+RUN wget -q -O - https://github.com/coreos/etcd/releases/download/v3.0.17/etcd-v3.0.17-linux-amd64.tar.gz | tar xzf - -C /tmp && \
+    mv /tmp/etcd-*/etcdctl /usr/local/bin/etcdctl && \
+    rm -rf /tmp/etcd-* && rm -f /etcd-*.tar.gz && \
+    apk del wget && \
+    mkdir  /etc/docker && \
+    mkdir  /docker-certs-tmp
 
-ENV DAPPER_ENV REPO TAG DRONE_TAG
-ENV DAPPER_SOURCE /go/src/github.com/rancher/rke-tools/
-ENV DAPPER_OUTPUT ./bin ./dist
-ENV DAPPER_DOCKER_SOCKET true
-ENV TRASH_CACHE ${DAPPER_SOURCE}/.trash-cache
-ENV HOME ${DAPPER_SOURCE}
-WORKDIR ${DAPPER_SOURCE}
+COPY templates /etc/confd/templates/
+COPY conf.d /etc/confd/conf.d/
+COPY cert-deployer nginx-proxy registry-cert /usr/bin/
+COPY entrypoint.sh /opt/zke-tools/
+COPY --from=build /go/src/github.com/zdnscloud/images/zke-tools/etcd-backup /opt/zke-tools
 
-ENTRYPOINT ["./scripts/entry"]
-CMD ["ci"]
+VOLUME /opt/zke-tools
+CMD ["/bin/bash"]

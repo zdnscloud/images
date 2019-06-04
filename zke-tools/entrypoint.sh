@@ -49,9 +49,9 @@ if [ "$1" = "kubelet" ]; then
         fi
     fi
 
-    if [ ! -z "${RKE_KUBELET_DOCKER_CONFIG}" ]
+    if [ ! -z "${ZKE_KUBELET_DOCKER_CONFIG}" ]
     then
-      echo ${RKE_KUBELET_DOCKER_CONFIG} | base64 -d | tee ${RKE_KUBELET_DOCKER_FILE}
+      echo ${ZKE_KUBELET_DOCKER_CONFIG} | base64 -d | tee ${ZKE_KUBELET_DOCKER_FILE}
     fi
 
     CGROUPDRIVER=$(/opt/zke-tools/bin/docker info | grep -i 'cgroup driver' | awk '{print $3}')
