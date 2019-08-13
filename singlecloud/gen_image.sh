@@ -8,7 +8,7 @@ then
     exit 1
 fi
 
-cat <<'EOF'
+cat <<'EOF' | docker build -f - -t zdnscloud/singlecloud:build-${BRANCH} --build-arg branch=${BRANCH} .
 ARG branch
 
 FROM zdnscloud/singlecloud:$branch as go
@@ -26,9 +26,20 @@ EXPOSE 80
 CMD ["-listen", ":80"]
 
 ENTRYPOINT ["/usr/local/bin/singlecloud"]     
-EOF | docker build -f - -t zdnscloud/singlecloud:build-${branch} --build-arg branch=${branch}
-
-cat <<EOF
-  Image build complete.
-  Build: zdnscloud/singlecloud:build-${branch}
 EOF
+
+if [[ $? -eq 0 ]]
+then
+cat <<EOF
+<------------------------------------------------>
+  Image build complete.
+  Build: zdnscloud/singlecloud:build-${BRANCH}
+<------------------------------------------------>
+EOF
+else
+cat <<EOF
+<------------------------------------------------>
+  Image build failure.
+<------------------------------------------------>
+EOF
+fi
