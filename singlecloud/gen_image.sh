@@ -12,7 +12,25 @@ cat <<EOF
 
 EOF
     exit 1
+else
+    cat <<EOF
+
+<------------------------------------------------>
+    Pull newest image of {branch}
+<------------------------------------------------>
+
+EOF
+    docker pull zdnscloud/singlecloud:${BRANCH}
+    docker pull zdnscloud/singlecloud-ui:${BRANCH}
 fi
+
+cat <<EOF
+
+<------------------------------------------------>
+    Building ...
+<------------------------------------------------>
+
+EOF
 
 cat <<'EOF' | docker build -f - -t zdnscloud/singlecloud:build-${BRANCH} --build-arg branch=${BRANCH} .
 ARG branch
@@ -41,6 +59,7 @@ cat <<EOF
 <------------------------------------------------>
   Image build complete.
   Build: zdnscloud/singlecloud:build-${BRANCH}
+  Run: docker run --rm -p 8080:80 zdnscloud/singlecloud:build-${BRANCH}
 <------------------------------------------------>
 
 EOF
