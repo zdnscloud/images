@@ -4,7 +4,13 @@ BRANCH=$1
 
 if [[ -z $BRANCH ]]
 then
-    echo "Usage: ./gen_image.sh {branch}"
+cat <<EOF
+
+<------------------------------------------------>
+    Usage: ./gen_image.sh {branch}
+<------------------------------------------------>
+
+EOF
     exit 1
 fi
 
@@ -31,15 +37,19 @@ EOF
 if [[ $? -eq 0 ]]
 then
 cat <<EOF
+
 <------------------------------------------------>
   Image build complete.
   Build: zdnscloud/singlecloud:build-${BRANCH}
 <------------------------------------------------>
+
 EOF
 else
 cat <<EOF
+
 <------------------------------------------------>
   Image build failure.
 <------------------------------------------------>
+
 EOF
 fi
