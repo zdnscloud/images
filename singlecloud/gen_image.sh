@@ -1,13 +1,18 @@
 #!/bin/bash
 
+set -e
+
 BRANCH=$1
+UIBRANCH=${2:-$1}
 
 if [[ -z $BRANCH ]]
 then
 cat <<EOF
 
 <------------------------------------------------>
-    Usage: ./gen_image.sh {branch}
+    Usage:
+        ./gen_image.sh {branch}
+        ./gen_image.sh {singlecloud branch} {singlecloud-ui branch}
 <------------------------------------------------>
 
 EOF
@@ -16,12 +21,13 @@ else
     cat <<EOF
 
 <------------------------------------------------>
-    Pull newest image of {branch}
+    Pull newest image of singlecloud - ${BRANCH}
+    Pull newest image of singlecloud-ui - ${UIBRANCH}
 <------------------------------------------------>
 
 EOF
     docker pull zdnscloud/singlecloud:${BRANCH}
-    docker pull zdnscloud/singlecloud-ui:${BRANCH}
+    docker pull zdnscloud/singlecloud-ui:${UIBRANCH}
 fi
 
 cat <<EOF
@@ -32,15 +38,17 @@ cat <<EOF
 
 EOF
 
-cat <<'EOF' | docker build -f - -t zdnscloud/singlecloud:build-${BRANCH} --build-arg branch=${BRANCH} .
+cat <<'EOF' | docker build -f - -t zdnscloud/singlecloud:${BRANCH}-${UIBRANCH} --build-arg branch=${BRANCH} --build-arg uibranch=${UIBRANCH} .
 ARG branch
+ARG uibranch
 
 FROM zdnscloud/singlecloud:$branch as go
-FROM zdnscloud/singlecloud-ui:$branch as js
+FROM zdnscloud/singlecloud-ui:$uibranch as js
 
 FROM alpine:latest
 
 LABEL zcloud/branch=$branch
+LABEL ui.zcloud/branch=$uibranch
 
 RUN apk --no-cache add ca-certificates
 COPY --from=go /usr/local/bin/singlecloud /usr/local/bin
@@ -58,8 +66,8 @@ cat <<EOF
 
 <------------------------------------------------>
   Image build complete.
-  Build: zdnscloud/singlecloud:build-${BRANCH}
-  Run: docker run --rm -p 8080:80 zdnscloud/singlecloud:build-${BRANCH}
+  Build: zdnscloud/singlecloud:${BRANCH}-${UIBRANCH}
+  Run: docker run --rm -p 8080:80 zdnscloud/singlecloud:${BRANCH}-${UIBRANCH}
 <------------------------------------------------>
 
 EOF
