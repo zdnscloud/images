@@ -1,6 +1,6 @@
 REGISTRY_NAME = zdnscloud
-IMAGE_Name = zke-remove
-IMAGE_VERSION = v0.6
+IMAGE_Name = ceph-init
+IMAGE_VERSION = v0.3
 
 .PHONY: all container
 

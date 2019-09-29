@@ -19,6 +19,8 @@ func main() {
 	}
 
 	delCNIIface()
+
+	zapDevice()
 }
 
 func UnmountPodVolume() {
@@ -103,4 +105,11 @@ func isContains(r, c string) bool {
 	_, all, _ := net.ParseCIDR(r)
 	it, _, _ := net.ParseCIDR(c)
 	return all.Contains(it)
+}
+
+func zapDevice() {
+	out, err := exec.Command("/bin/sh", "/zap_device.sh").Output()
+	if err != nil {
+		fmt.Println(out, err)
+	}
 }

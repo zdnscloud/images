@@ -14,4 +14,5 @@ LABEL description="Cluster Remove"
 RUN apk update && apk --no-cache add util-linux blkid file util-linux e2fsprogs lvm2 udev sgdisk device-mapper
 
 COPY --from=build /go/remove /remove
+COPY ./zap_device.sh /zap_device.sh
 ENTRYPOINT ["/remove"]
