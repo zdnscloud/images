@@ -44,7 +44,7 @@ func UnmountPodVolume() {
 		out, err := exec.Command("umount", "-f", path).Output()
 		fmt.Println("umount path:", path)
 		if err != nil {
-			fmt.Println(out, err)
+			fmt.Println(string(out), err)
 		}
 	}
 }
@@ -55,7 +55,7 @@ func delRoute(nets []string) {
 		fmt.Println("route del net:", n)
 		out, err := exec.Command("ip", "r", "flush", n).Output()
 		if err != nil {
-			fmt.Println(out, err)
+			fmt.Println(string(out), err)
 		}
 	}
 }
@@ -65,7 +65,7 @@ func delCNIIface() {
 	for _, n := range nics {
 		out, err := exec.Command("ip", "link", "delete", n).Output()
 		if err != nil {
-			fmt.Println(out, err)
+			fmt.Println(string(out), err)
 		}
 	}
 	out, err := exec.Command("modprobe", "-r", "ipip").Output()
@@ -108,8 +108,10 @@ func isContains(r, c string) bool {
 }
 
 func zapDevice() {
+	fmt.Println("Start zap device")
 	out, err := exec.Command("/bin/sh", "/zap_device.sh").Output()
+	fmt.Println(string(out))
 	if err != nil {
-		fmt.Println(out, err)
+		fmt.Println(err)
 	}
 }

@@ -7,4 +7,5 @@ done
 for pv in ${pvs};do
 	pvremove -v -y ${pv}
 	wipefs --all ${pv}
+	dd if=/dev/zero of=${pv} bs=1G count=1
 done
