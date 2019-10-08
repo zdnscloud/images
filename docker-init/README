@@ -1,4 +1,0 @@
-此脚本用于为批量主机部署免密登录和docker环境，使用方法如下:
-1: 必须使用root用户执行脚本manager.sh，执行后会提示输入root密码（所有主机密码必须一致）
-2: 创建 ips 文件，将主机IP列表写入
-3: 创建了docker用户，密码docker，以及docker用户的密钥对/home/docker/.ssh/id_rsa
