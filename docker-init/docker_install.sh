@@ -131,11 +131,11 @@ add_docker_user() {
         case "$lsb_dist" in
         centos)
                 useradd docker -g docker
-                echo "docker" |passwd docker --stdin
+                echo "Zcloud!@#456" |passwd docker --stdin
                 ;;
         ubuntu)
                 useradd -m docker -g docker
-                echo "docker:docker" |chpasswd
+                echo "docker:Zcloud!@#456" |chpasswd
                 ;;
         esac
 }
