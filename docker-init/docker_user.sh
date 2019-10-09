@@ -7,7 +7,7 @@ if [ ! -r ./ips ];then
 fi
 
 username="docker"
-passwd="docker"
+passwd="Zcloud!@#456"
 ssh_args="-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
 
 sshkey() {
