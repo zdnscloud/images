@@ -51,7 +51,7 @@ var (
 		"NodeAgent":                 "zdnscloud/node-agent:v1.2",
 		"MetricsServer":             "zdnscloud/metrics-server-amd64:v0.3.3",
 		"ZKERemover":                "zdnscloud/zke-remove:v0.5",
-		"StorageOperator":           "zdnscloud/storage-operator:v1.8",
+		"StorageOperator":           "zdnscloud/storage-operator:v3.5",
 		"ZcloudShell":               "zdnscloud/kubectl:v1.13.1",
 	}
 
@@ -90,9 +90,8 @@ var (
 		"CsiAttacher":            "quay.io/k8scsi/csi-attacher:v1.0.1",
 		"CsiNodeDriverRegistrar": "quay.io/k8scsi/csi-node-driver-registrar:v1.0.2",
 		"CsiProvisioner":         "quay.io/k8scsi/csi-provisioner:v1.0.1",
-		"Busybox":                "busybox:1.31.0",
-		"CephDaemon":             "ceph/daemon:latest-mimic",
-		"CephDaemonLatest":       "ceph/daemon:latest",
+		"CephInit":                "zdnscloud/ceph-init:v0.6",
+		"CephDaemon":             "ceph/ceph:v14.2.4-20190917",
 		"CephfsPlugin":           "quay.io/cephcsi/cephfsplugin:v1.0.0",
 	}
 )
