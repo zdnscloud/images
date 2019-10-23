@@ -61,7 +61,7 @@ var (
 		"PrometheusConfigReloader": "zdnscloud/prometheus-config-reloader:v0.31.1",
 		"PrometheusOperator":       "zdnscloud/prometheus-operator:v0.31.1",
 		"Prometheus":               "zdnscloud/prometheus:v2.10.0",
-		"GrafanaInit":              "zdnscloud/busybox:1.30.0",
+		"GrafanaInit":              "zdnscloud/busybox:1.30",
 	}
 
 	registryImages = map[string]string{
