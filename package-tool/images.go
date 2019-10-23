@@ -53,15 +53,15 @@ var (
 	}
 
 	monitorImages = map[string]string{
-		"GrafanaSideCar":           "kiwigrid/k8s-sidecar:0.0.18",
-		"KubeStateMetrics":         "quay.io/coreos/kube-state-metrics:v1.7.2",
-		"NodeExporter":             "quay.io/prometheus/node-exporter:v0.18.0",
+		"GrafanaSideCar":           "zdnscloud/grafana-k8s-sidecar:0.0.18",
+		"KubeStateMetrics":         "zdnscloud/kube-state-metrics:v1.7.2",
+		"NodeExporter":             "zdnscloud/prometheus-node-exporter:v0.18.0",
 		"Grafana":                  "zdnscloud/grafana:6.2.5",
 		"AlertManager":             "zdnscloud/prometheus-alertmanager:v0.17.0",
 		"PrometheusConfigReloader": "zdnscloud/prometheus-config-reloader:v0.31.1",
 		"PrometheusOperator":       "zdnscloud/prometheus-operator:v0.31.1",
 		"Prometheus":               "zdnscloud/prometheus:v2.10.0",
-		"GrafanaInit":              "busybox:1.30.0",
+		"GrafanaInit":              "zdnscloud/busybox:1.30.0",
 	}
 
 	registryImages = map[string]string{
