@@ -56,11 +56,11 @@ func main() {
 	log.InitLogger(log.Info)
 	defer log.CloseLogger()
 	var version string
-	flag.StringVar(&version, "version", "v2.0", "singlecloud version")
+	flag.StringVar(&version, "version", "v2.0.2", "singlecloud version")
 	flag.Parse()
-	image, ok := images[version]
+	versionImage, ok := images[version]
 	if !ok {
-		log.Fatalf("Not found version %s in image list", version)
+		log.Fatalf("Not found version %s in version list", version)
 	}
 
 	cli, err := client.NewEnvClient()
@@ -68,7 +68,7 @@ func main() {
 		log.Fatalf("New docker client failed %s", err)
 	}
 
-	for _, component := range image {
+	for _, component := range versionImage {
 		log.Infof("Begining pull %s images", component.Name)
 		if err := pullComponentImage(cli, component.Images); err != nil {
 			log.Fatalf("Pull component %s images failed %s", component.Name, err)

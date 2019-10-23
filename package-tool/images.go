@@ -7,30 +7,26 @@ type component struct {
 
 var (
 	images = map[string][]component{
-		"v2.0": []component{
+		"v2.0.2": []component{
 			component{
 				Name:   "zke",
-				Images: zkeImagesV20,
-			},
-			component{
-				Name:   "zcloud",
-				Images: zcloudImagesV20,
+				Images: zkeImages,
 			},
 			component{
 				Name:   "monitor",
-				Images: monitorImagesV20,
+				Images: monitorImages,
 			},
 			component{
 				Name:   "registry",
-				Images: registryImagesV20,
+				Images: registryImages,
 			},
 			component{
 				Name:   "storage",
-				Images: storageImagesV20,
+				Images: storageImages,
 			},
 		}}
 
-	zkeImagesV20 = map[string]string{
+	zkeImages = map[string]string{
 		"Etcd":                      "zdnscloud/coreos-etcd:v3.3.10",
 		"Kubernetes":                "zdnscloud/hyperkube:v1.13.10",
 		"Alpine":                    "zdnscloud/zke-tools:v0.1.40",
@@ -43,24 +39,20 @@ var (
 		"CalicoCNI":                 "zdnscloud/calico-cni:v3.4.0",
 		"CalicoCtl":                 "zdnscloud/calico-ctl:v2.0.0",
 		"PodInfraContainer":         "zdnscloud/pause-amd64:3.1",
-		"Ingress":                   "zdnscloud/nginx-ingress-controller:0.21.0",
+		"Ingress":                   "zdnscloud/nginx-ingress-controller:0.23.0",
 		"IngressBackend":            "zdnscloud/nginx-ingress-controller-defaultbackend:1.4",
 		"CoreDNS":                   "zdnscloud/coredns:1.2.6",
 		"CoreDNSAutoscaler":         "zdnscloud/cluster-proportional-autoscaler-amd64:1.0.0",
-		"ClusterAgent":              "zdnscloud/cluster-agent:v2.5",
+		"ClusterAgent":              "zdnscloud/cluster-agent:v3.0",
 		"NodeAgent":                 "zdnscloud/node-agent:v1.2",
 		"MetricsServer":             "zdnscloud/metrics-server-amd64:v0.3.3",
-		"ZKERemover":                "zdnscloud/zke-remove:v0.5",
+		"ZKERemover":                "zdnscloud/zke-remove:v0.7",
 		"StorageOperator":           "zdnscloud/storage-operator:v3.5",
-		"ZcloudShell":               "zdnscloud/kubectl:v1.13.1",
+		"ZcloudShell":               "zdnscloud/kubectl:v1.13.10",
+		"ZcloudProxy":               "zdnscloud/zcloud-proxy:v1.0.1",
 	}
 
-	zcloudImagesV20 = map[string]string{
-		"ZcloudProxy": "zdnscloud/zcloud-proxy:v1.0.2",
-		"Zcloud":      "zdnscloud/zcloud:v2.0",
-	}
-
-	monitorImagesV20 = map[string]string{
+	monitorImages = map[string]string{
 		"GrafanaSideCar":           "kiwigrid/k8s-sidecar:0.0.18",
 		"KubeStateMetrics":         "quay.io/coreos/kube-state-metrics:v1.7.2",
 		"NodeExporter":             "quay.io/prometheus/node-exporter:v0.18.0",
@@ -72,7 +64,7 @@ var (
 		"GrafanaInit":              "busybox:1.30.0",
 	}
 
-	registryImagesV20 = map[string]string{
+	registryImages = map[string]string{
 		"Chartmuseum": "zdnscloud/goharbor-chartmuseum-photon:v0.8.1-v1.8.1",
 		"Clair":       "zdnscloud/goharbor-clair-photon:v2.0.8-v1.8.1",
 		"Core":        "zdnscloud/goharbor-harbor-core:v1.8.1",
@@ -84,13 +76,13 @@ var (
 		"Registry":    "zdnscloud/goharbor-registry-photon:v2.7.1-patch-2819-v1.8.1",
 	}
 
-	storageImagesV20 = map[string]string{
+	storageImages = map[string]string{
 		"LvmCsi":                 "zdnscloud/lvmcsi:v0.6",
 		"Lvmd":                   "zdnscloud/lvmd:v0.5",
 		"CsiAttacher":            "quay.io/k8scsi/csi-attacher:v1.0.1",
 		"CsiNodeDriverRegistrar": "quay.io/k8scsi/csi-node-driver-registrar:v1.0.2",
 		"CsiProvisioner":         "quay.io/k8scsi/csi-provisioner:v1.0.1",
-		"CephInit":                "zdnscloud/ceph-init:v0.6",
+		"CephInit":               "zdnscloud/ceph-init:v0.6",
 		"CephDaemon":             "ceph/ceph:v14.2.4-20190917",
 		"CephfsPlugin":           "quay.io/cephcsi/cephfsplugin:v1.0.0",
 	}
