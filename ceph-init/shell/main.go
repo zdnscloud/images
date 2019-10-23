@@ -8,11 +8,11 @@ import (
 )
 
 func main() {
-	var id string
+	var id, uuid string
 	filePth := os.Args[1]
 	f, err := os.Open(filePth)
 	if err != nil {
-		fmt.Println(id)
+		fmt.Println(id, uuid)
 	}
 	info, _ := ioutil.ReadAll(f)
 	res := make(map[string][]lvm)
@@ -23,9 +23,10 @@ func main() {
 				continue
 			}
 			id = v[0].Tags.OSD_ID
+			uuid = v[0].Tags.OSD_FSID
 		}
 	}
-	fmt.Println(id)
+	fmt.Println(id, uuid)
 }
 
 type lvm struct {

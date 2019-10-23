@@ -1,6 +1,6 @@
 REGISTRY_NAME = zdnscloud
 IMAGE_Name = ceph-init
-IMAGE_VERSION = v0.3
+IMAGE_VERSION = v0.6
 
 .PHONY: all container
 
