@@ -84,6 +84,6 @@ var (
 		"CsiProvisioner":         "quay.io/k8scsi/csi-provisioner:v1.0.1",
 		"CephInit":               "zdnscloud/ceph-init:v0.6",
 		"CephDaemon":             "ceph/ceph:v14.2.4-20190917",
-		"CephfsPlugin":           "quay.io/cephcsi/cephfsplugin:v1.0.0",
+		"CephfsCsi":              "quay.io/cephcsi/cephcsi:v1.1.0",
 	}
 )
