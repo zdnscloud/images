@@ -34,22 +34,12 @@ create_key() {
 
 create_pool() {
   if [ "$CEPHFS_CREATE" -eq 1 ]; then
-    ceph osd pool ls --connect-timeout 15 |grep -q ${CEPHFS_DATA_POOL}
-    if [ $? -ne 0 ];then
-      ceph osd pool create "${CEPHFS_DATA_POOL}" "${CEPHFS_DATA_POOL_PG}"
-      ceph osd pool set ${CEPHFS_DATA_POOL} size ${REPLICATION}
-    fi
-    ceph osd pool ls --connect-timeout 15|grep -q ${CEPHFS_METADATA_POOL}
-    if [ $? -ne 0 ];then
-      ceph osd pool create "${CEPHFS_METADATA_POOL}" "${CEPHFS_METADATA_POOL_PG}"
-      ceph osd pool set ${CEPHFS_METADATA_POOL} size ${REPLICATION}
-    fi
-    ceph fs ls --connect-timeout 15|grep -q ${CEPHFS_NAME}
-    if [ $? -ne 0 ];then
-      ceph fs new "${CEPHFS_NAME}" "${CEPHFS_METADATA_POOL}" "${CEPHFS_DATA_POOL}"
-    fi
+    ceph osd pool create "${CEPHFS_DATA_POOL}" "${CEPHFS_DATA_POOL_PG}"
+    ceph osd pool set ${CEPHFS_DATA_POOL} size ${REPLICATION}
+    ceph osd pool create "${CEPHFS_METADATA_POOL}" "${CEPHFS_METADATA_POOL_PG}"
+    ceph osd pool set ${CEPHFS_METADATA_POOL} size ${REPLICATION}
+    ceph fs new "${CEPHFS_NAME}" "${CEPHFS_METADATA_POOL}" "${CEPHFS_DATA_POOL}"
   fi
-
 }
 
 mds_run() {

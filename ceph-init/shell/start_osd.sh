@@ -68,7 +68,6 @@ osd_activate() {
 
 osd() {
   ceph-osd --foreground --id ${ID} --fsid ${FSID} --cluster ceph --setuser ceph --setgroup ceph --default-log-to-file false --ms-learn-addr-from-peer=false --crush-location="root=default host=${OSD_NAME}" 
-  sleep 86400
 }
 
 conf() {
