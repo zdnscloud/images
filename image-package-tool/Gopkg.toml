@@ -1,0 +1,7 @@
+[[constraint]]
+  revision = "a9fbbdc8dd8794b20af358382ab780559bca589d"
+  name = "github.com/docker/docker"
+
+[prune]
+  go-tests = true
+  unused-packages = true

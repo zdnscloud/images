@@ -14,17 +14,28 @@ import (
 	"github.com/zdnscloud/cement/log"
 )
 
-func pullImage(cli *client.Client, images map[string]string) error {
+func pullImage(cli *client.Client, images map[string]string, retrys int) error {
 	for _, image := range images {
+		if err := pullOneImage(cli, image, retrys); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func pullOneImage(cli *client.Client, image string, retrys int) error {
+	for i := 0; i < retrys; i++ {
 		resp, err := cli.ImagePull(context.TODO(), image, types.ImagePullOptions{})
 		if err != nil {
-			return fmt.Errorf("Pull image %s failed %s", image, err.Error())
+			log.Infof("Pull image %s failed %s, has tried [%s] times", image, err.Error(), i)
+			continue
 		}
 		defer resp.Close()
 		io.Copy(ioutil.Discard, resp)
 		log.Infof("Pull image %s succeed", image)
+		return nil
 	}
-	return nil
+	return fmt.Errorf("pull image %s failed too many times", image)
 }
 
 func saveImage(cli *client.Client, images map[string]string, fileName string) error {
@@ -58,8 +69,10 @@ func main() {
 	defer log.CloseLogger()
 	var inputFile string
 	var outFile string
+	var retry int
 	flag.StringVar(&inputFile, "i", "image.json", "image list json file,it's content should be a json map")
 	flag.StringVar(&outFile, "o", "image.tar", "image tar file name")
+	flag.IntVar(&retry, "r", 5, "image pull retry times")
 	flag.Parse()
 
 	var images map[string]string
@@ -77,7 +90,7 @@ func main() {
 		log.Fatalf("Create docker client failed %s", err)
 	}
 
-	if err := pullImage(cli, images); err != nil {
+	if err := pullImage(cli, images, retry); err != nil {
 		log.Fatalf("Pull image failed ", err.Error())
 	}
 	if err := saveImage(cli, images, outFile); err != nil {

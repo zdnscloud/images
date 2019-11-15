@@ -1,5 +1,5 @@
 {
-    "immence-operator": "storage-operator:v3.5.3.1",
+    "immence-operator": "zdnscloud/storage-operator:v3.5",
     "lvmcsi": "zdnscloud/lvmcsi:v0.6.2",
     "lvmd": "zdnscloud/lvmd:v0.5",
     "csi-attacher": "quay.io/k8scsi/csi-attacher:v1.0.1",
