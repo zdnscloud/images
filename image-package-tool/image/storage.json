@@ -1,0 +1,11 @@
+{
+    "immence-operator": "storage-operator:v3.5.3.1",
+    "lvmcsi": "zdnscloud/lvmcsi:v0.6.2",
+    "lvmd": "zdnscloud/lvmd:v0.5",
+    "csi-attacher": "quay.io/k8scsi/csi-attacher:v1.0.1",
+    "csi-node-driver-registrar": "quay.io/k8scsi/csi-node-driver-registrar:v1.0.2",
+    "csi-provisioner": "quay.io/k8scsi/csi-provisioner:v1.0.1",
+    "ceph-init": "zdnscloud/ceph-init:v0.7",
+    "ceph": "ceph/ceph:v14.2.4-20190917",
+    "cephcsi": "quay.io/cephcsi/cephcsi:v1.1.0"
+}
