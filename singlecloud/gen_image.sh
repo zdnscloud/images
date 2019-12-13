@@ -45,23 +45,23 @@ ARG uibranch
 FROM zdnscloud/singlecloud:$branch as go
 FROM zdnscloud/singlecloud-ui:$uibranch as js
 
-FROM alpine:latest
+FROM scratch
 
 LABEL zcloud/branch=$branch
 LABEL ui.zcloud/branch=$uibranch
 
-RUN apk --no-cache add ca-certificates
-COPY --from=go /usr/local/bin/singlecloud /usr/local/bin
+COPY --from=go /singlecloud /
 COPY --from=js /www /www
 
 EXPOSE 80
 CMD ["-listen", ":80"]
 
-ENTRYPOINT ["/usr/local/bin/singlecloud"]     
+ENTRYPOINT ["/singlecloud"]
 EOF
 
 if [[ $? -eq 0 ]]
 then
+docker image prune -f
 cat <<EOF
 
 <------------------------------------------------>
