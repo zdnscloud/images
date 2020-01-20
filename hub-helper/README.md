@@ -17,4 +17,10 @@ hub-helper是一个简单的dockerhub cli工具，用于在命令行下查找、
     * delete：删除镜像的指定tag，如`hub-helper tag delete singlecloud ws-test`
     > 简写一级命令delete
     * search：搜索镜像所有tag，打印包含关键字的tag名称，如`hub-helper tag search singlecloud tap`
+## 编译方法
+```bash
+git clone https://github.com/zdnscloud/images $(GOPATH)/src/github.com/zdnscloud/images
+cd $(GOPATH)/src/github.com/zdnscloud/images/hub-helper
+go build
+```
 
