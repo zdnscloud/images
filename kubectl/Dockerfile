@@ -1,4 +1,5 @@
-FROM golang:1.12.5-alpine3.9 AS build
+FROM golang:1.13.7-alpine3.11 AS build
+ENV GOPROXY=https://goproxy.cn
 COPY ./sleep-forever.go /go/src
 RUN mkdir -p /go/src/github.com/c-bata \
     && apk add make git \
@@ -10,10 +11,10 @@ RUN mkdir -p /go/src/github.com/c-bata \
     && cd /go/src \
     && go build sleep-forever.go
 
-FROM alpine:3.9.4
+FROM alpine:3.11
 
 WORKDIR /home
-ENV KUBE_VERSION="v1.13.10"
+ENV KUBE_VERSION="v1.17.2"
 ENV PS1='zcloud-shell\$ '
 COPY --from=build /go/src/github.com/c-bata/kube-prompt/kube-prompt /usr/local/bin/
 COPY --from=build /go/src/sleep-forever /usr/local/bin/
