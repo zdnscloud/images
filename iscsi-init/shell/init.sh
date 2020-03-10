@@ -61,4 +61,7 @@ login
 time=$(date +%s%N | md5sum | head -c 1)
 sleep ${time}
 init
+if [ $? -ne 0 ];then
+	exit 99
+fi
 tail -f /dev/null
