@@ -53,8 +53,7 @@ LABEL ui.zcloud/branch=$uibranch
 COPY --from=go /singlecloud /
 COPY --from=js /www /www
 
-EXPOSE 80
-CMD ["-listen", ":80"]
+EXPOSE 443
 
 ENTRYPOINT ["/singlecloud"]
 EOF
