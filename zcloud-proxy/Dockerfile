@@ -1,14 +1,14 @@
-FROM golang:1.12.5-alpine3.9 AS build
+FROM golang:1.13.7-alpine3.11 AS build
 
-RUN mkdir -p /go/src/github.com/zdnscloud \
-    && apk add git \
-    && cd /go/src/github.com/zdnscloud \
-    && git clone https://github.com/zdnscloud/singlecloud.git \
-    && cd singlecloud \
-    && CGO_ENABLED=0 GOOS=linux go build cmd/agent/agent.go
+ARG goproxy
+ENV GOPROXY=$goproxy
 
-FROM alpine:3.9.4
+RUN mkdir -p /go/src/github.com/zdnscloud/images/zcloud-proxy
+COPY . /go/src/github.com/zdnscloud/images/zcloud-proxy
+RUN cd /go/src/github.com/zdnscloud/images/zcloud-proxy \
+    && CGO_ENABLED=0 GOOS=linux go build agent.go
+
+FROM alpine:3.11.5
 RUN apk --no-cache add ca-certificates
-COPY --from=build /go/src/github.com/zdnscloud/singlecloud/agent /usr/local/bin/
-
+COPY --from=build /go/src/github.com/zdnscloud/images/zcloud-proxy/agent /usr/local/bin/
 ENTRYPOINT ["agent"]
