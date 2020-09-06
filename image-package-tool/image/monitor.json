@@ -1,0 +1,15 @@
+{
+    "alertmanager": "zdnscloud/prometheus-alertmanager:v0.17.0",
+    "prometheusOperator": "zdnscloud/prometheus-operator:v0.31.1",
+    "configmapReloadImage": "zdnscloud/coreos-configmap-reload:v0.0.1",
+    "prometheusConfigReloaderImage": "zdnscloud/prometheus-config-reloader:v0.31.1",
+    "prometheus": "zdnscloud/prometheus:v2.10.0",
+    "grafana": "zdnscloud/grafana:6.2.5",
+    "grafanatest": "dduportal/bats:0.4.0",
+    "downloadDashboardsImage": "appropriate/curl:latest",
+    "busybox": "zdnscloud/busybox:1.30",
+    "sidecar": "zdnscloud/grafana-k8s-sidecar:0.0.18",
+    "kube-state-metrics": "zdnscloud/kube-state-metrics:v1.7.2",
+    "prometheus-adapter": "directxman12/k8s-prometheus-adapter-amd64:v0.5.0",
+    "prometheus-node-exporter": "zdnscloud/prometheus-node-exporter:v0.18.0"
+}

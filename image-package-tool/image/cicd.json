@@ -1,0 +1,12 @@
+{
+    "controller": "docker.io/zdnscloud/tekton-pipeline-controller:v0.10.1",
+    "kube_config_writer": "docker.io/zdnscloud/tekton-pipeline-kubeconfigwriter:v0.10.1",
+    "creds_initer": "docker.io/zdnscloud/tekton-pipeline-creds-init:v0.10.1",
+    "git_initer": "docker.io/zdnscloud/tekton-pipeline-git-init:v0.10.1",
+    "entrypointer": "docker.io/zdnscloud/tekton-pipeline-entrypoint:v0.10.1",
+    "image_digest_exporter": "docker.io/zdnscloud/tekton-pipeline-imagedigestexporter:v0.10.1",
+    "pull_request_initer": "docker.io/zdnscloud/tekton-pipeline-pullrequest-init:v0.10.1",
+    "gcs_fetcher": "docker.io/zdnscloud/tekton-pipeline-gcs-fetcher:v0.10.1",
+    "webhook": "docker.io/zdnscloud/tekton-pipeline-webhook:v0.10.1",
+    "dashboard": "docker.io/zdnscloud/tekton-dashboard-dashboard:v0.5.1"
+}

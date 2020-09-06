@@ -1,0 +1,8 @@
+{
+    "controller": "zdnscloud/linkerd-io-controller:stable-2.6.0",
+    "proxy": "zdnscloud/linkerd-io-proxy:stable-2.6.0",
+    "proxy_init": "zdnscloud/linkerd-io-proxy-init:v1.2.0",
+    "web": "zdnscloud/linkerd-io-web:stable-2.6.0",
+    "prometheus": "prom/prometheus:v2.11.1",
+    "grafana": "zdnscloud/linkerd-io-grafana:stable-2.6.0"
+}

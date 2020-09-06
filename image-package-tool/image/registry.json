@@ -1,0 +1,14 @@
+{
+    "nginx": "zdnscloud/goharbor-nginx-photon:v1.8.1",
+    "portal": "zdnscloud/goharbor-harbor-portal:v1.8.1",
+    "core": "zdnscloud/goharbor-harbor-core:v1.8.1",
+    "jobservice": "zdnscloud/goharbor-harbor-jobservice:v1.8.1",
+    "registry": "zdnscloud/goharbor-registry-photon:v2.7.1-patch-2819-v1.8.1",
+    "controller": "zdnscloud/goharbor-harbor-registryctl:v1.8.1",
+    "chartmuseum": "zdnscloud/goharbor-chartmuseum-photon:v0.8.1-v1.8.1",
+    "clair": "zdnscloud/goharbor-clair-photon:v2.0.8-v1.8.1",
+    "notary": "zdnscloud/goharbor-notary-server-photon:v0.6.1-v1.8.1",
+    "signer": "zdnscloud/goharbor-notary-signer-photon:v0.6.1-v1.8.1",
+    "database": "zdnscloud/goharbor-harbor-db:v1.8.1",
+    "redis": "zdnscloud/goharbor-redis-photon:v1.8.1"
+}
